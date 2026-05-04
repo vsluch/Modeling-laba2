@@ -37,7 +37,7 @@ namespace Modeling_laba2
             {
                 if(RemainingPreventionTime != 0) { RemainingPreventionTime--; }
             }
-            else
+            else if(WaitingType == TankerWaitingType.Loading)
             {
                 if(RemainingLoadingTime != 0) { RemainingLoadingTime--; }
             }
@@ -75,6 +75,49 @@ namespace Modeling_laba2
                 profilact_time += renovation_time;
             }
             RemainingPreventionTime = profilact_time;
+        }
+
+
+        public override string ToString()
+        {
+            int number = 0;
+            switch (Type)
+            {
+                case TankerType.First:
+                    number = 1;
+                    break;
+                case TankerType.Second:
+                    number = 2;
+                    break;
+                case TankerType.Third:
+                    number = 3;
+                    break;
+            }
+
+            string waiting_type = "NoWaitingType";
+            switch (WaitingType)
+            {
+                case TankerWaitingType.InLine:
+                    waiting_type = "InLine";
+                    break;
+                case TankerWaitingType.Prevention:
+                    waiting_type = "Prevention";
+                    break;
+                case TankerWaitingType.Loading:
+                    waiting_type = "Loading";
+                    break;
+                case TankerWaitingType.WentAway:
+                    waiting_type = "WentAway";
+                    break;
+            }
+
+            return $"Tanker{number} {waiting_type}";
+        }
+
+
+        public string GetInformation()
+        {
+            return $"{ToString()}: ВрЗагрузки: {RemainingLoadingTime} ВрРабот: {RemainingPreventionTime} ВрОжидания: {WaitingTime}";
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Modeling_laba2
 
     public enum TankerWaitingType
     {
-        Loading,    // Загрузка нефтью
-        Prevention, // Прфилактические и ремонтные работы
         InLine,     // В очереди
+        Prevention, // Прфилактические и ремонтные работы
+        Loading,    // Загрузка нефтью
         WentAway    // Уплыл
     }
 

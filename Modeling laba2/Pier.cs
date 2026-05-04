@@ -22,28 +22,59 @@ namespace Modeling_laba2
 
 
         // принять танкер
-        public bool TakeTanker(Tanker _tanker)
+        public void TakeTanker(Tanker _tanker)
         {
-            if(_tanker == null || CurrentTanker != null) { return false; }
+            if(_tanker == null) { return; }
 
             CurrentTanker = _tanker;
             Occupation = PierOccupationType.Busy;
-            
-            return true;            
+
+            if (CurrentTanker.RemainingPreventionTime > 0)
+            {
+                CurrentTanker.WaitingType = TankerWaitingType.Prevention;
+            }
+            else if (CurrentTanker.RemainingLoadingTime > 0)
+            {
+                CurrentTanker.WaitingType = TankerWaitingType.Loading;
+            }
+            else
+            {
+                Tanker temp = DriveTankerAway();
+                Occupation = PierOccupationType.Free;
+            }        
         }
 
 
         public void UpdateState()
         {
-            CurrentTanker.UpdateState();
-            if()
+            if (CurrentTanker != null)
+            {
+                CurrentTanker.UpdateState();
+
+                if (CurrentTanker.WaitingType == TankerWaitingType.Prevention && CurrentTanker.RemainingPreventionTime < 1)
+                {
+                    CurrentTanker.StartLoading();
+                }
+                if (CurrentTanker.WaitingType == TankerWaitingType.Loading && CurrentTanker.RemainingLoadingTime < 1)
+                {
+                    Tanker temp = DriveTankerAway();
+                    return;
+                }
+            }
         }
 
 
         // отогнать танкер от причала
         public Tanker DriveTankerAway()
         {
-            CurrentTanker.WaitingType = TankerWaitingType.InLine;
+            if (CurrentTanker.RemainingLoadingTime < 1)
+            {
+                CurrentTanker.WaitingType = TankerWaitingType.WentAway;
+            }
+            else
+            {
+                CurrentTanker.WaitingType = TankerWaitingType.InLine;
+            }
             Tanker temp = CurrentTanker;
             CurrentTanker = null;
             Occupation = PierOccupationType.Free;
