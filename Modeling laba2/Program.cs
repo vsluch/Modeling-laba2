@@ -8,39 +8,20 @@ namespace ModelingLaba2
     {
         static void Main(string[] args)
         {
-            Tanker t1 = new Tanker(TankerType.First);
-            Tanker t2 = new Tanker(TankerType.Second);
-            Pier p = new Pier(1);
+            Port port = new Port();
 
-            Console.WriteLine(t1.GetInformation());
-            Console.WriteLine(t2.GetInformation());
-            Console.WriteLine();
-
-            for (int i = 0; i < 60; i++)
+            for(int i = 0; i < port._hoursInYear; i++)
             {
-                if(i == 0)
-                {
-                    p.TakeTanker(t1);
-                }
-                p.UpdateState();
-                if(i == 10)
-                {
-                    p.TakeTanker(t2);
-                }
-                if (p.Occupation == PierOccupationType.Free)
-                {
-                    p.TakeTanker(t1);
-                }
-                if (p.CurrentTanker != null)
-                {
-                    Console.WriteLine(p.CurrentTanker.GetInformation());
-                }
-                else
-                {
-                    Console.WriteLine("Free");
-                }
+                port.Hour();
             }
+            port.PrintReport();
 
+            Port port2 = new Port();
+            for (int i = 0; i < port2._hoursInYear; i++)
+            {
+                port2.Hour();
+            }
+            port2.PrintReport();
         }
     }
 }

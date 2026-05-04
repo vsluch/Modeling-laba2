@@ -20,5 +20,19 @@ namespace Modeling_laba2
         {
             return Random.Shared.NextDouble() < chance;
         }
+
+
+        public static float GenUniform()
+        {
+            return Random.Shared.NextSingle();
+        }
+
+
+        // экспоненциальное распределение с матожиданием
+        public static int GenExp(int mean)
+        {
+            double t = -Math.Log(1 - Random.Shared.NextDouble()) * mean;
+            return (int)t;
+        }
     }
 }

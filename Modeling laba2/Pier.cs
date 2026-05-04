@@ -45,7 +45,7 @@ namespace Modeling_laba2
         }
 
 
-        public void UpdateState()
+        public Tanker UpdateState()
         {
             if (CurrentTanker != null)
             {
@@ -57,16 +57,18 @@ namespace Modeling_laba2
                 }
                 if (CurrentTanker.WaitingType == TankerWaitingType.Loading && CurrentTanker.RemainingLoadingTime < 1)
                 {
-                    Tanker temp = DriveTankerAway();
-                    return;
+                    return DriveTankerAway();
                 }
             }
+            return null;
         }
 
 
         // отогнать танкер от причала
         public Tanker DriveTankerAway()
         {
+            if(CurrentTanker == null) { return null; }
+
             if (CurrentTanker.RemainingLoadingTime < 1)
             {
                 CurrentTanker.WaitingType = TankerWaitingType.WentAway;
